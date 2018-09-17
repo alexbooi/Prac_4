@@ -20,3 +20,76 @@ RESET=17
 FREQ=27 
 STOP=22
 DISP=5
+global X
+X =0.5
+global T
+T=time.time()
+global values
+values = ['']*5
+global Matrix
+Matrix = [[0 for x in range(5)] for y in range(5)]
+global F
+F=0.5 
+
+GPIO.setup(SPIMOSI, GPIO.OUT)
+GPIO.setup(SPIMISO, GPIO.IN)
+GPIO.setup(SPICLK, GPIO.OUT)
+GPIO.setup(SPICS, GPIO.OUT)
+GPIO.setup(RESET, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(FREQ, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(STOP, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(DISP, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setwarnings(False)
+
+mcp = Adafruit_MCP3008.MCP3008(clk=SPICLK, cs=SPICS, mosi=SPIMOSI,miso=SPIMISO)
+spi.max_speed_hz=1000000
+
+def reset (channel):
+        #reset buttton
+        print("Reset")
+        global T
+        T=time.time()
+        os.system('clear')
+        
+def freq (channel):
+        #freq buttton
+        print("Freq")
+        global F
+        F=F*2
+        if F>2:
+                F=0.5
+        
+def stop (channel):
+        #stop buttton
+        #print("Stop")
+       for x in range(5):
+                global T
+                y=time.time()
+                n=time.time()
+                k=n-T
+                global Matrix
+                Matrix[x][0]=strftime(("%H:%M:%S"),gmtime(y))
+                global Matrix
+                Matrix[x][1]=strftime(("%H:%M:%S"),gmtime(k))
+                global Matrix
+                Matrix[x][2]='%.1f V' %((mcp.read_adc(0))
+                global Matrix
+                Matrix[x][3]='%f C' %mcp.read_adc(1)
+                global Matrix
+                Matrix[x][4]='%d%%' %((mcp.read_adc(2))
+                global F
+                time.sleep(F)
+        print("stop")
+
+
+def disp (channel):
+        #disp button
+        print("Time\t\tTimer\t\tPot\tTemp\tLight")
+        global Matrix
+        for x in range(5):
+                print (Matrix[x][0]+"\t" +  Matrix[x][1]+"\t"+Matrix[x][2]+"\t"+Matrix[x][3]+"\t"+Matrix[x][4])
+        
+GPIO.add_event_detect(RESET, GPIO.RISING, bouncetime=300, callback=reset)
+GPIO.add_event_detect(FREQ, GPIO.RISING, bouncetime=300, callback=freq)
+GPIO.add_event_detect(STOP, GPIO.RISING, bouncetime=300, callback=stop)
+GPIO.add_event_detect(DISP, GPIO.RISING, bouncetime=300, callback=disp)
