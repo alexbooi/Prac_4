@@ -20,3 +20,47 @@ RESET=17
 FREQ=27 
 STOP=22
 DISP=5
+global X
+X =0.5
+global T
+T=time.time()
+global values
+values = ['']*5
+global Matrix
+Matrix = [[0 for x in range(5)] for y in range(5)]
+global F
+F=0.5 
+
+GPIO.setup(SPIMOSI, GPIO.OUT)
+GPIO.setup(SPIMISO, GPIO.IN)
+GPIO.setup(SPICLK, GPIO.OUT)
+GPIO.setup(SPICS, GPIO.OUT)
+GPIO.setup(RESET, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(FREQ, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(STOP, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(DISP, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setwarnings(False)
+
+mcp = Adafruit_MCP3008.MCP3008(clk=SPICLK, cs=SPICS, mosi=SPIMOSI,miso=SPIMISO)
+spi.max_speed_hz=1000000
+
+def reset (channel):
+        #reset buttton
+        print("Reset")
+        
+def freq (channel):
+        #freq buttton
+        print("Freq")
+        
+def stop (channel):
+        #stop buttton
+        print("Stop")
+
+
+def disp (channel):
+        #disp button
+        
+GPIO.add_event_detect(RESET, GPIO.RISING, bouncetime=300, callback=reset)
+GPIO.add_event_detect(FREQ, GPIO.RISING, bouncetime=300, callback=freq)
+GPIO.add_event_detect(STOP, GPIO.RISING, bouncetime=300, callback=stop)
+GPIO.add_event_detect(DISP, GPIO.RISING, bouncetime=300, callback=disp)
