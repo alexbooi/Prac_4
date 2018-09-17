@@ -1,0 +1,11 @@
+#!/usr/bin/python
+import RPi.GPIO as GPIO
+import Adafruit_MCP3008
+import spidev
+import time
+from time import gmtime, strftime
+import sys
+import os
+# Open SPI bus
+spi = spidev.SpiDev() # create spi object
+spi.open(0,0) # initialise SPI
