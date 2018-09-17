@@ -47,18 +47,30 @@ spi.max_speed_hz=1000000
 def reset (channel):
         #reset buttton
         print("Reset")
+        global T
+        T=time.time()
+        os.system('clear')
         
 def freq (channel):
         #freq buttton
         print("Freq")
+        global F
+        F=F*2
+        if F>2:
+                F=0.5
         
 def stop (channel):
         #stop buttton
         print("Stop")
+        
 
 
 def disp (channel):
         #disp button
+        print("Time\t\tTimer\t\tPot\tTemp\tLight")
+        global Matrix
+        for x in range(5):
+                print (Matrix[x][0]+"\t" +  Matrix[x][1]+"\t"+Matrix[x][2]+"\t"+Matrix[x][3]+"\t"+Matrix[x][4])
         
 GPIO.add_event_detect(RESET, GPIO.RISING, bouncetime=300, callback=reset)
 GPIO.add_event_detect(FREQ, GPIO.RISING, bouncetime=300, callback=freq)
