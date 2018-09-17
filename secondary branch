@@ -1,0 +1,22 @@
+#!/usr/bin/python
+import RPi.GPIO as GPIO
+import Adafruit_MCP3008
+import spidev
+import time
+from time import gmtime, strftime
+import sys
+import os
+# Open SPI bus
+spi = spidev.SpiDev() # create spi object
+spi.open(0,0) # initialise SPI
+
+GPIO.setmode(GPIO.BCM)
+# pin definition
+SPICLK = 24
+SPIMISO = 23
+SPIMOSI = 18
+SPICS = 15
+RESET=17
+FREQ=27 
+STOP=22
+DISP=5
