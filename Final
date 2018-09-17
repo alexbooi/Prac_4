@@ -61,8 +61,25 @@ def freq (channel):
         
 def stop (channel):
         #stop buttton
-        print("Stop")
-        
+        #print("Stop")
+       for x in range(5):
+                global T
+                y=time.time()
+                n=time.time()
+                k=n-T
+                global Matrix
+                Matrix[x][0]=strftime(("%H:%M:%S"),gmtime(y))
+                global Matrix
+                Matrix[x][1]=strftime(("%H:%M:%S"),gmtime(k))
+                global Matrix
+                Matrix[x][2]='%.1f V' %((mcp.read_adc(0))
+                global Matrix
+                Matrix[x][3]='%f C' %mcp.read_adc(1)
+                global Matrix
+                Matrix[x][4]='%d%%' %((mcp.read_adc(2))
+                global F
+                time.sleep(F)
+        print("stop")
 
 
 def disp (channel):
